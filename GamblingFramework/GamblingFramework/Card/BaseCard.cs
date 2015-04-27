@@ -14,10 +14,10 @@ namespace GamblingFramework
         }
         
         /// <summary>
-        /// Creates a card with the given index (if no index is given, it will default to 0)
+        /// Creates a card with the given index
         /// </summary>
         /// <param name="index"></param>
-        public BaseCard(int index = 0)
+        public BaseCard(int index)
         {
             this.Index = index;
         }
