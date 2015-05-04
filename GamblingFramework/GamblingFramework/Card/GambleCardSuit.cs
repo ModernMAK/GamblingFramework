@@ -1,7 +1,7 @@
 ﻿
 namespace GamblingFramework
 {
-    public enum GambleCardSuit
+    public enum StandardCardSuit
     {
         Spades,
         Hearts,
