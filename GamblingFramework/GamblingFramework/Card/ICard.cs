@@ -5,9 +5,9 @@ namespace GamblingFramework
     public interface ICard : IComparable<ICard>, IEquatable<ICard>
     {
         /// <summary>
-        /// The Index of the Card
+        /// The Identity of the Card
         /// </summary>
-        int Index
+        int Identity
         {
             get;
             set;
