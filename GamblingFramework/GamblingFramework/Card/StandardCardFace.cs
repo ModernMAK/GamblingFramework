@@ -1,6 +1,6 @@
 ﻿namespace GamblingFramework
 {
-    public enum GambleCardFace
+    public enum StandardCardFace
     {
         Joker = -1,
 
