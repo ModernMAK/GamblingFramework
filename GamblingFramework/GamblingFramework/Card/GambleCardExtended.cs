@@ -42,110 +42,114 @@ namespace GamblingFramework
             }
         }
            
-        public static bool IsRed(this GambleCardSuit suit)
+        public static bool IsRed(this StandardCardSuit suit)
         {
             return
-                (suit == GambleCardSuit.Diamonds) ||
-                (suit == GambleCardSuit.Hearts);
+                (suit == StandardCardSuit.Diamonds) ||
+                (suit == StandardCardSuit.Hearts);
         }
-        public static bool IsBlack(this GambleCardSuit suit)
+        public static bool IsBlack(this StandardCardSuit suit)
         {
             return
                 !suit.IsRed();
         }
 
-        public static GambleCardSuit CalculateGambleCardSuit(this IGambleCard card)
+        public static StandardCardSuit CalculateStandardCardSuit(this IGambleCard card)
         {
-            return CalculateGambleCardSuit(card.Index);
+            return CalculateStandardCardSuit(card.Index);
         }
-        public static GambleCardSuit CalculateGambleCardSuit(int index)
+        public static StandardCardSuit CalculateStandardCardSuit(int index)
         {
-            if (index > GambleCard.CARD_INDEX_GAMBLE_MAX)
+            if (index > 51)
             {
-                if (index % 2 == 0)
-                {
-                    return GambleCardSuit.Spades;
-                }
-                else
-                {
-                    return GambleCardSuit.Hearts;
-                }
+                //Convert to 4-based number
+                index %= 4;
+                //Convert to 13-based number
+                index *= 13;
             }
-            else
+            
+            switch (index / 13)
             {
-                switch (index / 13)
-                {
-                    case 0:
-                        return GambleCardSuit.Spades;
-                    case 1:
-                        return GambleCardSuit.Hearts;
-                    case 2:
-                        return GambleCardSuit.Clubs;
-                    case 3:
-                        return GambleCardSuit.Diamonds;
-                }
+                case 0:
+                    return StandardCardSuit.Spades;
+                case 1:
+                    return StandardCardSuit.Hearts;
+                case 2:
+                    return StandardCardSuit.Clubs;
+                case 3:
+                    return StandardCardSuit.Diamonds;
             }
-            return GambleCardSuit.Spades;
+            //If we magically fail to find anything, return Spades
+            return StandardCardSuit.Spades;
         }
 
-        public static GambleCardFace CalculateGambleCardValue(this IGambleCard card)
+        public static StandardCardFace CalculateGambleCardValue(this IGambleCard card)
         {
             return CalculateGambleCardValue(card.Index);
         }
-        public static GambleCardFace CalculateGambleCardValue(int index)
+        public static StandardCardFace CalculateGambleCardValue(int index)
         {
-            if (index > GambleCard.CARD_INDEX_GAMBLE_MAX)
+            if (index > 51)
             {
-                return GambleCardFace.Joker;
+                return StandardCardFace.Joker;
             }
             else
             {
+                //Unfortunately, I setup my enums where ace = 1, 
+                //so we could convert it by subtracting one, or we can use a switch
+                //after some unit-testing, I'll find which is faster (if any)
+                //if they are the same, i'll be using int-to-object-to-enum conversion, since that is easier to mantain
                 switch (index % 13)
                 {
                     case 0:
-                        return GambleCardFace.Ace;
+                        return StandardCardFace.Ace;
                     case 1:
-                        return GambleCardFace.Two;
+                        return StandardCardFace.Two;
                     case 2:
-                        return GambleCardFace.Three;
+                        return StandardCardFace.Three;
                     case 3:
-                        return GambleCardFace.Four;
+                        return StandardCardFace.Four;
                     case 4:
-                        return GambleCardFace.Five;
+                        return StandardCardFace.Five;
                     case 5:
-                        return GambleCardFace.Six;
+                        return StandardCardFace.Six;
                     case 6:
-                        return GambleCardFace.Seven;
+                        return StandardCardFace.Seven;
                     case 7:
-                        return GambleCardFace.Eight;
+                        return StandardCardFace.Eight;
                     case 8:
-                        return GambleCardFace.Nine;
+                        return StandardCardFace.Nine;
                     case 9:
-                        return GambleCardFace.Ten;
+                        return StandardCardFace.Ten;
                     case 10:
-                        return GambleCardFace.Jack;
+                        return StandardCardFace.Jack;
                     case 11:
-                        return GambleCardFace.Queen;
+                        return StandardCardFace.Queen;
                     case 12:
-                        return GambleCardFace.King;
+                        return StandardCardFace.King;
                 }
             }
-            return GambleCardFace.Joker;
+            return StandardCardFace.Joker;
         }
 
-        public static int CalculateGambleCardIndex(GambleCardSuit suit, GambleCardFace value)
+        public static int CalculateGambleCardIndex(StandardCardSuit suit, StandardCardFace value)
         {
             //To avoid uneccessary calculations with Jokers, we always check them first (since jokers are a worst case scenario)
-            if(value == GambleCardFace.Joker){
-                if(suit.IsBlack()){
+            if(value == StandardCardFace.Joker){
                     //0-51 leaves an odd last index, 
                     //black is the even joker, 
                     //since the next index would be even, 
                     //the black joker is the next index
-                    return GambleCard.CARD_INDEX_GAMBLE_MAX+1;
-                }
-                else{
-                    return GambleCard.CARD_INDEX_GAMBLE_MAX+2;
+                switch (suit)
+                {
+                    case StandardCardSuit.Spades:
+                        return 52;
+                    case StandardCardSuit.Hearts:
+                        return 53;
+                    case StandardCardSuit.Clubs:
+                        return 53;
+                    case StandardCardSuit.Diamonds:
+                        return 54;
                 }
             }
 
@@ -155,59 +159,59 @@ namespace GamblingFramework
 
             switch (suit)
             {
-                case GambleCardSuit.Spades:
+                case StandardCardSuit.Spades:
                     suitId = 0;
                     break;
-                case GambleCardSuit.Hearts:
+                case StandardCardSuit.Hearts:
                     suitId = 1;
                     break;
-                case GambleCardSuit.Clubs:
+                case StandardCardSuit.Clubs:
                     suitId = 2;
                     break;
-                case GambleCardSuit.Diamonds:
+                case StandardCardSuit.Diamonds:
                     suitId = 3;
                     break;
             }
             switch (value)
             {
-                case GambleCardFace.Ace:
-                    suitId = 0;
+                case StandardCardFace.Ace:
+                    indexId = 0;
                     break;
-                case GambleCardFace.Two:
-                    suitId = 1;
+                case StandardCardFace.Two:
+                    indexId = 1;
                     break;
-                case GambleCardFace.Three:
-                    suitId = 2;
+                case StandardCardFace.Three:
+                    indexId = 2;
                     break;
-                case GambleCardFace.Four:
-                    suitId = 3;
+                case StandardCardFace.Four:
+                    indexId = 3;
                     break;
-                case GambleCardFace.Five:
-                    suitId = 4;
+                case StandardCardFace.Five:
+                    indexId = 4;
                     break;
-                case GambleCardFace.Six:
-                    suitId = 5;
+                case StandardCardFace.Six:
+                    indexId = 5;
                     break;
-                case GambleCardFace.Seven:
-                    suitId = 6;
+                case StandardCardFace.Seven:
+                    indexId = 6;
                     break;
-                case GambleCardFace.Eight:
-                    suitId = 7;
+                case StandardCardFace.Eight:
+                    indexId = 7;
                     break;
-                case GambleCardFace.Nine:
-                    suitId = 8;
+                case StandardCardFace.Nine:
+                    indexId = 8;
                     break;
-                case GambleCardFace.Ten:
-                    suitId = 9;
+                case StandardCardFace.Ten:
+                    indexId = 9;
                     break;
-                case GambleCardFace.Jack:
-                    suitId = 10;
+                case StandardCardFace.Jack:
+                    indexId = 10;
                     break;
-                case GambleCardFace.Queen:
-                    suitId = 11;
+                case StandardCardFace.Queen:
+                    indexId = 11;
                     break;
-                case GambleCardFace.King:
-                    suitId = 12;
+                case StandardCardFace.King:
+                    indexId = 12;
                     break;
             }
 
