@@ -3,30 +3,34 @@
 namespace GamblingFramework
 {
     [Serializable]
-    public class BaseCard : ICard
+    /// <summary>
+    /// Provides basic or example implimentation of ICard. 
+    /// This approach assumes each card iis an instance.
+    /// </summary>
+    public class Card : ICard
     {
         /// <summary>
-        /// Creates a card with an Index of 0
+        /// Creates a card with an identity of 0.
         /// </summary>
-        public BaseCard()
-            : this(0)
+        public Card()
+            : Card(0)
         {
         }
         
         /// <summary>
-        /// Creates a card with the given index
+        /// Creates a card with the given identity.
         /// </summary>
-        /// <param name="index"></param>
-        public BaseCard(int index)
+        /// <param name="identity">The identity of this card.</param>
+        public Card(int identity)
         {
-            this.Index = index;
+            this.Identity = identity;
         }
 
         /// <summary>
         /// The index of the card, hidden to preven forced-sets
         /// </summary>
         private int
-            myIndex;
+            myIdentity;
 
         /// <summary>
         /// Returns a string representing this Card's Index.
@@ -38,17 +42,18 @@ namespace GamblingFramework
         }
 
         /// <summary>
-        /// Gets or Sets the Index, this property is virtual to allow subclasses to modify it's behaviour.
+        /// Gets or Sets the Identity.
+        /// This property is virtual to allow subclasses to modify it's behaviour.
         /// </summary>
-        public virtual int Index
+        public virtual int Identity
         {
             get
             {
-                return this.myIndex;
+                return this.myIdentity;
             }
             set
             {
-                this.myIndex = value;
+                this.myIdentity = value;
             }
         }
 
@@ -59,7 +64,7 @@ namespace GamblingFramework
         /// <returns>+ if greater than, 0 if equal, - if less than.</returns>
         public int CompareTo(ICard other)
         {
-            return this.Index.CompareTo(other.Index);
+            return this.Identity.CompareTo(other.Index);
         }
 
         /// <summary>
