@@ -2,12 +2,12 @@
 
 namespace GamblingFramework
 {
-    public interface IGambleCard : ICard, IComparable<IGambleCard>, IEquatable<IGambleCard>
+    public interface IStandardCard : ICard, IComparable<IStandardCard>, IEquatable<IStandardCard>
     {
         /// <summary>
         /// Gets the Suit of the card
         /// </summary>
-        GambleCardSuit Suit
+        StandardCardSuit Suit
         {
             get;
             //set; << decided to go index based instead.
@@ -15,7 +15,7 @@ namespace GamblingFramework
         /// <summary>
         /// Gets the Face of the card
         /// </summary>
-        GambleCardFace Face
+        StandardCardFace Face
         {
             get;
             //set; << decided to go index based instead.
