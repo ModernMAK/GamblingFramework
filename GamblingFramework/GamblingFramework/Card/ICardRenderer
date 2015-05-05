@@ -1,0 +1,13 @@
+using System;
+
+namespace GamblingFramework.Generic
+{
+	///Allows an easy way to render cards 
+    public interface ICardRenderer<T> where T : ICard
+    {
+    	/// <summary>
+        /// Renders the given card.
+        /// </summary>
+    	void Render(T card);
+    }
+}
