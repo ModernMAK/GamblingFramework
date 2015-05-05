@@ -51,36 +51,35 @@ namespace GamblingFramework
         public static bool IsBlack(this StandardCardSuit suit)
         {
             return
-                !suit.IsRed();
+                (suit == StandardCardSuit.Spades) ||
+                (suit == StandardCardSuit.Clubs);
         }
 
+        /*
+        Instead, keep this within the concrete types (defeats the purpose of interfaces to have this here)
+        
         public static StandardCardSuit CalculateStandardCardSuit(this IGambleCard card)
         {
             return CalculateStandardCardSuit(card.Index);
         }
-        public static StandardCardSuit CalculateStandardCardSuit(int index)
+        public static StandardCardSuit CalculateStandardCardSuit(int suitIdentity){
+            return (StandardCardSuit)(object)(suitIdentity);
+        }
+        public static int CalculateStandardCardSuitIdentity(StandardCardSuit suit){
+            return (int)(object)(suitIdentity);
+        }
+        public static StandardCardSuit CalculateStandardCardSuit(int cardIdentity)
         {
-            if (index > 51)
+            if (cardIdentity > 51)
             {
                 //Convert to 4-based number
-                index %= 4;
+                cardIdentity %= 4;
                 //Convert to 13-based number
-                index *= 13;
+                cardIdentity *= 13;
             }
+            cardIdentity /= 13;
             
-            switch (index / 13)
-            {
-                case 0:
-                    return StandardCardSuit.Spades;
-                case 1:
-                    return StandardCardSuit.Hearts;
-                case 2:
-                    return StandardCardSuit.Clubs;
-                case 3:
-                    return StandardCardSuit.Diamonds;
-            }
-            //If we magically fail to find anything, return Spades
-            return StandardCardSuit.Spades;
+            return CalculateStandardCardSuit(cardIdentity);
         }
 
         public static StandardCardFace CalculateGambleCardValue(this IGambleCard card)
@@ -217,5 +216,6 @@ namespace GamblingFramework
 
             return (suitId * 13) + indexId;
         }
+        */
     }
 }
