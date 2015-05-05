@@ -43,12 +43,9 @@ namespace GamblingFramework
         {
         }
 
-        /**
-        No longer neccessary, contemplate removing Identity as a virtual member
-        
+       
         /// <summary>
         /// Gets or Sets the GambleCard
-        /// When set, the Identity will be bounded to 0 and 53 (Ace of Spades and the Red Joker)
         /// </summary>
         public override int Identity
         {
@@ -58,37 +55,54 @@ namespace GamblingFramework
             }
             set
             {
-                base.Identity =
-                    Math.Clamp(
-                        value,
-                        CARD_INDEX_MIN,
-                        CARD_INDEX_STANDARD_MAX
-                    );
+                base.Identity = value;
+                this.Suit = CalculateStandardCardSuit(this.Identity);
+                this.Face = CalculateStandardCardFace(this.Identity);
             }
         }
-        */
+        
+        public static CalculateStandardCardSuit(int cardIdentity){
+            int suitIdentity = (cardIdentity / 13) + 1;
+            return GambleCardExtended.ToStandardCardSuit(cardIdentity)
+        }
+        
 
+        private StandardCardSuit
+            mySuit;
         /// <summary>
         /// Gets the Suit for this Identity
         /// </summary>
-        public GambleCardSuit Suit
+        public StandardCardSuit Suit
         {
             get
             {
-                return this.CalculateGambleCardSuit();
+                return this.mySuit;
+            }
+            private set
+            {
+                this.mySuit = value;
             }
         }
+        
+        private StandardCardFace
+            myFace;
 
         /// <summary>
         /// Gets the Face for this Identity
         /// </summary>
-        public GambleCardFace Face
+        public StandardCardFace Face
         {
             get
             {
-                return this.CalculateGambleCardValue();
+                return this.myFace;
+            }
+            private set
+            {
+                this.myFace = value;
             }
         }
+
+        public static GambleCardSuit
 
         /// <summary>
         /// Gets a string representation of this card.
