@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
@@ -64,10 +64,22 @@ namespace GamblingFramework
         }
         */
         public static StandardCardSuit ToStandardCardSuit(int suitIdentity){
-            return (StandardCardSuit)(object)(suitIdentity);
+            try{
+                return (StandardCardSuit)(object)(suitIdentity);
+            }
+            catch(Exception e){
+                //Do something with exception;
+                return StandardCardSuit.Blank;
+            }
         }
         public static int ToStandardCardSuitIdentity(StandardCardSuit suit){
-            return (int)(object)(suitIdentity);
+            try{
+                return (int)(object)(suitIdentity);
+            }
+            catch(Exception e){
+                //Do something with exception;
+                return 0;
+            }
         }
         public static StandardCardFace ToStandardCardFace(int faceIdentity){
             return (StandardCardSuit)(object)(faceIdentity);
