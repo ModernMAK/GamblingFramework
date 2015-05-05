@@ -3,6 +3,8 @@
     public enum StandardCardFace
     {
         Joker = -1,
+        
+        Blank = 0,
 
         Ace = 1,
 
