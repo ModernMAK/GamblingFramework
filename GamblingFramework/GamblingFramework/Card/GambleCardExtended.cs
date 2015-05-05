@@ -62,12 +62,20 @@ namespace GamblingFramework
         {
             return CalculateStandardCardSuit(card.Index);
         }
-        public static StandardCardSuit CalculateStandardCardSuit(int suitIdentity){
+        */
+        public static StandardCardSuit ToStandardCardSuit(int suitIdentity){
             return (StandardCardSuit)(object)(suitIdentity);
         }
-        public static int CalculateStandardCardSuitIdentity(StandardCardSuit suit){
+        public static int ToStandardCardSuitIdentity(StandardCardSuit suit){
             return (int)(object)(suitIdentity);
         }
+        public static StandardCardFace ToStandardCardFace(int faceIdentity){
+            return (StandardCardSuit)(object)(faceIdentity);
+        }
+        public static int ToStandardCardFaceIdentity(StandardCardFace face){
+            return (int)(object)(faceIdentity);
+        }
+        /*
         public static StandardCardSuit CalculateStandardCardSuit(int cardIdentity)
         {
             if (cardIdentity > 51)
