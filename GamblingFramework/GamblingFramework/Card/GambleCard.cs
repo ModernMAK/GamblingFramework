@@ -102,8 +102,6 @@ namespace GamblingFramework
             }
         }
 
-        public static GambleCardSuit
-
         /// <summary>
         /// Gets a string representation of this card.
         /// </summary>
